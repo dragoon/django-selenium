@@ -1,5 +1,5 @@
 ========================
-Django Test Coverage App
+Django Selenium Integration
 ========================
 
 .. contents::
