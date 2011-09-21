@@ -13,9 +13,7 @@ setup(
     download_url='https://github.com/dragoon/django-selenium/',
 
     description='Django Selenium Integration',
-    long_description="A test coverage reporting tool that utilizes "
-                     "Ned Batchelder's excellent coverage.py to show how "
-                     "much of your code is exercised with your tests.",
+    long_description="Selenium testing integration into Django",
 
     license='Apache License 2.0',
     packages=find_packages(),

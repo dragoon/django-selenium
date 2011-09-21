@@ -12,10 +12,8 @@ your tests.
 
 Dependencies
 ============
-* Django_ 1.2 and above. For earlier versions, try version 1.0.3 of
-  django-coverage.
-* coverage.py_
-* Pygments_
+* Django_ 1.2 and above.
+* Selenium_ 2.5.0 and above.
 
 How do I use it?
 ================
@@ -37,29 +35,13 @@ You don't have to install ``django_coverage`` as an app if you don't want
 to. You can simply use the test runner if you like.
 
 1. Update ``settings.TEST_RUNNER =
-   'django_coverage.coverage_runner.CoverageRunner'``
-2. Include test coverage specific settings in your own settings file.
+   'django_seleinum.test_runner.SeleniumTestRunner'``
+2. Include specific selenium settings in your own settings file.
    See ``settings.py`` for more detail.
 3. Run ``manage.py test`` like you normally do.
 
 And that's it.
 
-Three themes available
-----------------------
-#) Coverage.py theme:
 
-   .. image:: http://img714.imageshack.us/img714/6956/screenshot3kg.png
-#) Default:
-
-   .. image:: http://img24.imageshack.us/img24/5396/screenshotpx.png
-#) rcov (ruby coverage):
-
-   .. image:: http://img694.imageshack.us/img694/8769/screenshot2kk.png
-
-
-.. _George Song: mailto:george@55minutes.com
-.. _55 Minutes: http://www.55minutes.com/
-.. _Ned Batchelder: http://nedbatchelder.com
-.. _coverage.py: http://bitbucket.org/ned/coveragepy/
 .. _Django: http://www.djangoproject.com/
-.. _Pygments: http://pygments.org/
+.. _Selenium: http://seleniumhq.org/
