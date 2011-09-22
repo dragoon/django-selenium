@@ -76,18 +76,20 @@ class SeleniumTestRunner(DjangoTestSuiteRunner):
 
     def _start_selenium(self):
         if self.selenium:
+            assert settings.SELENIUM_PATH, "selenium path is not set"
+
             # Set display variable
             os.environ['DISPLAY'] = settings.SELENIUM_DISPLAY
             # Start test server
             self.test_server = start_test_server(port=settings.SELENIUM_TESTSERVER_PORT)
 
             # Start selenium server
-            assert settings.SELENIUM_PATH, "selenium path is not set"
             selenium_server_cmd = "java -jar %s" % settings.SELENIUM_PATH
             self.selenium_server = subprocess.Popen([selenium_server_cmd])
 
             # Waiting for server to be ready
             if not wait_until_connectable(4444):
+                self.test_server.stop()
                 assert False, "selenium server does not respond"
 
     def _stop_selenium(self):

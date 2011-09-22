@@ -6,7 +6,8 @@ SELENIUM_TEST_RUNNER = getattr(settings, 'SELENIUM_TEST_RUNNER',
 
 SELENIUM_DISPLAY = getattr(settings, 'SELENIUM_DISPLAY', ':0')
 
-# Path to selenium-server JAR
+# Path to selenium-server JAR,
+# for example: "/home/dragoon/myproject/selenium-server/selenium-server.jar"
 SELENIUM_PATH=getattr(settings, 'SELENIUM_PATH', None)
 
 SELENIUM_TESTSERVER_PORT = getattr(settings, 'SELENIUM_TESTSERVER_PORT', 8011)
