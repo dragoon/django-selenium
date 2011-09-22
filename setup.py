@@ -1,27 +1,27 @@
 #!/usr/bin/env python
 from setuptools import setup, find_packages
-from django_selenium import __version__
+import django_selenium as ds
 
 setup(
     name='django-selenium',
-    version=__version__,
-    author='Roman Prokofyev',
-    author_email='roman.prokofyev@gmail.com',
-    maintainer='Roman Prokofyev',
-    maintainer_email='roman.prokofyev@gmail.com',
+    version=ds.__version__,
+    author=ds.__author__,
+    author_email=ds.__email__,
+    maintainer=ds.__maintainer__,
+    maintainer_email=ds.__email__,
     url='https://github.com/dragoon/django-selenium/',
     download_url='https://github.com/dragoon/django-selenium/',
 
-    description='Django Selenium Integration',
+    description=ds.__summary__,
     long_description="Selenium testing integration into Django",
 
-    license='Apache License 2.0',
+    license=ds.__license__,
     packages=find_packages(),
 
     requires=['django (>=1.2)', 'selenium (>= 2.5)'],
 
     classifiers=[
-        'Development Status :: 1 - Planning',
+        'Development Status :: 2 - Pre-Alpha',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
