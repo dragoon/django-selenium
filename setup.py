@@ -30,4 +30,5 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Software Development :: Testing',
         ],
+    zip_safe = True
     )
