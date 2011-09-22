@@ -14,3 +14,5 @@ SELENIUM_TESTSERVER_PORT = getattr(settings, 'SELENIUM_TESTSERVER_PORT', 8011)
 
 # Set the drivers that you want to run your tests against
 SELENIUM_DRIVERS = getattr(settings, 'SELENIUM_DRIVERS', ('Firefox',))
+
+SELENIUM_TIMEOUT = getattr(settings, 'SELENIUM_TIMEOUT', 120)
