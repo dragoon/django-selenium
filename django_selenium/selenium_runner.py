@@ -27,9 +27,7 @@ def wait_until_connectable(port, timeout=60):
     def is_connectable(port):
         """Tries to connect to the specified port."""
         try:
-            socket_ = socket.socket()
-            socket_.settimeout(1)
-            socket_.connect(("127.0.0.1", port))
+            socket_ = socket.create_connection(("127.0.0.1", port), 1)
             socket_.close()
             return True
         except socket.error:
@@ -84,11 +82,11 @@ class SeleniumTestRunner(DjangoTestSuiteRunner):
             self.test_server = start_test_server(port=settings.SELENIUM_TESTSERVER_PORT)
 
             # Start selenium server
-            selenium_server_cmd = "java -jar %s" % settings.SELENIUM_PATH
-            self.selenium_server = subprocess.Popen([selenium_server_cmd])
+            self.selenium_server = subprocess.Popen(('java -jar %s' % settings.SELENIUM_PATH).split())
 
             # Waiting for server to be ready
             if not wait_until_connectable(4444):
+                self.selenium_server.kill()
                 self.test_server.stop()
                 assert False, "selenium server does not respond"
 
