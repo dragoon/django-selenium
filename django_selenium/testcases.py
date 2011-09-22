@@ -3,10 +3,11 @@ from selenium import webdriver
 import time
 
 from django.db import transaction
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.test import TransactionTestCase
 from django.utils.html import strip_tags
+
+from django_selenium import settings
 
 def wait(timeout=10):
     def inner_wait(func):
