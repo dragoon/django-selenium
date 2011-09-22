@@ -35,10 +35,10 @@ def wait_until_connectable(port, timeout=60):
 
     count = 0
     while not is_connectable(port):
-        if count == timeout:
+        if count >= timeout:
             return False
-        count += 1
-        time.sleep(1)
+        count += 5
+        time.sleep(5)
     return True
 
 class SeleniumTestRunner(DjangoTestSuiteRunner):
