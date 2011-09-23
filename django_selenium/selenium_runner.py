@@ -61,6 +61,15 @@ class SeleniumTestRunner(DjangoTestSuiteRunner):
             suite = super(SeleniumTestRunner, self).build_suite(test_labels, extra_tests, **kwargs)
 
         if self.selenium:
+            # Hack to exclude doctests from selenium-only, they are already present
+            from django.db.models import get_app
+            if test_labels:
+                for label in test_labels:
+                    if not '.' in label:
+                        app = get_app(label)
+                        setattr(app, 'suite', unittest.TestSuite)
+
+            # Add tests from seltests.py modules
             import django.test.simple
             orig_test_module = django.test.simple.TEST_MODULE
             django.test.simple.TEST_MODULE = SELTEST_MODULE
