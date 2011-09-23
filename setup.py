@@ -9,8 +9,8 @@ setup(
     author_email=ds.__email__,
     maintainer=ds.__maintainer__,
     maintainer_email=ds.__email__,
-    url='https://github.com/dragoon/django-selenium/',
-    download_url='https://github.com/dragoon/django-selenium/',
+    url=ds.__url__,
+    download_url=ds.__url__,
 
     description=ds.__summary__,
     long_description="Selenium testing integration into Django",
@@ -21,7 +21,7 @@ setup(
     requires=['django (>=1.2)', 'selenium (>= 2.5)'],
 
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
