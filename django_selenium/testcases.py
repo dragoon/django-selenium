@@ -65,7 +65,12 @@ class MyDriver(object):
 
     def get_alert_text(self):
         alert = self.switch_to_alert()
-        text = alert.text['text']
+        # Selenium can return either dict or text,
+        # TODO: Need to investigate why
+        try:
+            text = alert.text['text']
+        except IndexError:
+            text = alert.text
         alert.dismiss()
         self.switch_to_default_content()
         return text
