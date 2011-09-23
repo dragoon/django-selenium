@@ -9,6 +9,7 @@ from django_selenium import settings as selenium_settings
 
 
 class Command(test.Command):
+    # TODO: update when django 1.4 is out, it will have custom options available
     option_list = test.Command.option_list + (
         make_option('--selenium', action='store_true', dest='selenium', default=False,
             help='Run selenium tests during test execution\n'
