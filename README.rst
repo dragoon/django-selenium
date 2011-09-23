@@ -6,9 +6,8 @@ Django Selenium Integration
 
 What is it?
 ===========
-A test coverage reporting tool that utilizes `Ned Batchelder`_'s
-excellent coverage.py_ to show how much of your code is exercised with
-your tests.
+django-selenium is a toolset that provides seamless integration for Django_ framework with
+a Selenium_ testing tool. It allows to write and execute **selenium tests** just as usual ones.
 
 Dependencies
 ============
@@ -17,28 +16,26 @@ Dependencies
 
 How do I use it?
 ================
-Install as a Django app
------------------------
-1. Place the entire ``django_coverage`` app in your third-party apps
-   directory.
-2. Update your ``settings.INSTALLED_APPS`` to include ``django_coverage``.
-3. Include test coverage specific settings in your own settings file.
-   See ``settings.py`` for more detail.
 
-Once you've completed all the steps, you'll have a new custom command
-available to you via ``manage.py test_coverage``. It works just like
-``manage.py test``.
+1. Update ``settings.TEST_RUNNER = 'django_seleinum.test_runner.SeleniumTestRunner'``
+   or subclass ``SeleniumTestRunner`` to make your own test runner with extended functionaliity.
+2. Include selenium-specific settings in your own settings file.
+   One setting that you must always define is ``SELENIUM_PATH``.
+   It should point to the selenium-server.jar on your system, for example ``/home/dragoon/selenium-server-2.6.jar``
+   See ``settings.py`` for other settings available.
+3. Write some selenium tests for your apps in a module ``seltests.py``.
+   Subclass selenium tests from ``django_seleinum.testcases.SeleniumTestCase``.
+4. Add custom management command to override default test command::
+       from django_selenium.management.commands import test_selenium
 
-Use it as a test runner
------------------------
-You don't have to install ``django_coverage`` as an app if you don't want
-to. You can simply use the test runner if you like.
+       class Command(test_selenium.Command):
 
-1. Update ``settings.TEST_RUNNER =
-   'django_seleinum.test_runner.SeleniumTestRunner'``
-2. Include specific selenium settings in your own settings file.
-   See ``settings.py`` for more detail.
-3. Run ``manage.py test`` like you normally do.
+           def handle(self, *test_labels, **options):
+               super(Command, self).handle(*test_labels, **options)
+   Place it somewhere in your app in ``management/commands/test.py``
+
+5. Run ``manage.py test`` like you normally do. Now you have two extra options: ``--selenium`` and ``--selenium-only``.
+   First runs selenium-specific tests after the usual ones, the last runs only selenium tests.
 
 And that's it.
 
