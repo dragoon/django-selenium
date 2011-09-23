@@ -6,8 +6,9 @@ Django Selenium Integration
 
 What is it?
 ===========
-django-selenium is a toolset that provides seamless integration for Django_ framework with
-a Selenium_ testing tool. It allows to write and execute **selenium tests** just as usual ones.
+| **Django-selenium** is a toolset that provides seamless integration for Django_ framework
+  with a Selenium_ testing tool.
+It allows to write and execute **selenium tests** just as usual ones.
 
 Dependencies
 ============
@@ -26,12 +27,13 @@ How do I use it?
 3. Write some selenium tests for your apps in a module ``seltests.py``.
    Subclass selenium tests from ``django_seleinum.testcases.SeleniumTestCase``.
 4. Add custom management command to override default test command::
+         
        from django_selenium.management.commands import test_selenium
-
        class Command(test_selenium.Command):
 
            def handle(self, *test_labels, **options):
                super(Command, self).handle(*test_labels, **options)
+
    Place it somewhere in your app in ``management/commands/test.py``
 
 5. Run ``manage.py test`` like you normally do. Now you have two extra options: ``--selenium`` and ``--selenium-only``.
@@ -39,6 +41,11 @@ How do I use it?
 
 And that's it.
 
+MyDriver class
+==============
+
+| ``MyDriver`` class from ``django_selenium.tescases`` offers extended functionality on top of ``selenium.webdriver.remote.webdriver.WebDriver`` class.
+It has a number of convinient shortcuts to handle frequently used operations, see source code for details, documentation will be here soon.
 
 .. _Django: http://www.djangoproject.com/
 .. _Selenium: http://seleniumhq.org/
