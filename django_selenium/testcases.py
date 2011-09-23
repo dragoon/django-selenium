@@ -25,7 +25,9 @@ def wait(timeout=10):
 
 
 class MyDriver(object):
-    def __init__(self, driver=webdriver.Firefox):
+    def __init__(self):
+        driver = getattr(webdriver, settings.SELENIUM_DRIVER, None)
+        assert driver, "settings.SELENIUM_DRIVER contains non-existing driver"
         self.driver = driver()
         self.testserver_port = settings.SELENIUM_TESTSERVER_PORT
         self.text = ''

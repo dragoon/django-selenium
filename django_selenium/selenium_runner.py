@@ -21,7 +21,7 @@ except ImportError:
 
 SELTEST_MODULE = 'seltests'
 
-def wait_until_connectable(port, timeout=60):
+def wait_until_connectable(port, timeout=120):
     """Blocks until the specified port is connectable."""
 
     def is_connectable(port):
