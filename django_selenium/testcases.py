@@ -71,7 +71,7 @@ class MyDriver(object):
         # TODO: Need to investigate why
         try:
             text = alert.text['text']
-        except IndexError:
+        except TypeError:
             text = alert.text
         alert.dismiss()
         self.switch_to_default_content()
