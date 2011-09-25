@@ -41,6 +41,8 @@ How do I use it?
 
 And that's it.
 
+To see the integration in action, please check out test application: https://github.com/dragoon/django-selenium-testapp
+
 MyDriver class
 ==============
 
