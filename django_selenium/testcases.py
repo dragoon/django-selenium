@@ -47,7 +47,7 @@ class MyDriver(object):
 
     def open_url(self, url):
         self.get('http://localhost:%d' % self.testserver_port + url)
-        self.text = strip_tags(self.page_source)
+        self.text = strip_tags(unicode(self.page_source))
 
     def click(self, selector):
         self.find(selector).click()
@@ -56,7 +56,7 @@ class MyDriver(object):
         """This function also refreshes page text"""
         self.find(selector).click()
         res = self.find(newselector).is_displayed()
-        self.text = strip_tags(self.page_source)
+        self.text = strip_tags(unicode(self.page_source))
         return res
 
     def is_element_present(self, selector):
