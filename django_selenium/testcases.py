@@ -15,7 +15,7 @@ def wait(timeout=10):
         def wrapper(self, *args, **kwargs):
             res = func(self, *args, **kwargs)
             i = timeout
-            while not res:
+            while not res and i:
                 time.sleep(1)
                 res = func(self, *args, **kwargs)
                 i-=1
