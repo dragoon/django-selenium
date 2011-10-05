@@ -21,3 +21,4 @@ Thumbs.db
 build/
 MANIFEST
 dist/
+*egg-info
