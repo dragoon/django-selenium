@@ -50,13 +50,13 @@ class MyDriver(object):
         self.text = strip_tags(unicode(self.page_source))
 
     def click(self, selector):
-        self.find(selector).click()
-
-    def click_and_wait(self, selector, newselector):
         """This function also refreshes page text"""
         self.find(selector).click()
-        res = self.find(newselector).is_displayed()
         self.text = strip_tags(unicode(self.page_source))
+
+    def click_and_wait(self, selector, newselector):
+        self.click(selector)
+        res = self.find(newselector).is_displayed()
         return res
 
     def is_element_present(self, selector):
