@@ -30,12 +30,12 @@ How do I use it?
    Subclass selenium tests from ``django_selenium.testcases.SeleniumTestCase``.
 4. Add custom management command to override default test command::
 
-   from django_selenium.management.commands import test_selenium
+       from django_selenium.management.commands import test_selenium
 
-   class Command(test_selenium.Command):
+       class Command(test_selenium.Command):
 
-       def handle(self, *test_labels, **options):
-           super(Command, self).handle(*test_labels, **options)
+           def handle(self, *test_labels, **options):
+               super(Command, self).handle(*test_labels, **options)
 
    Place it somewhere in your app in ``management/commands/test.py`` (don't
    forget the __init__.py files in each directory)
