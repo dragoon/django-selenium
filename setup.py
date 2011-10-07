@@ -21,7 +21,7 @@ setup(
     requires=['django (>=1.2)', 'selenium (>= 2.5)'],
 
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
