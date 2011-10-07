@@ -39,6 +39,14 @@ class MyDriver(object):
             attr = self.driver.__getattribute__(name)
         return attr
 
+    def _wait_for_page_source(self):
+        page_source = self.page_source
+        time.sleep(1)
+        while page_source!=self.page_source:
+            page_source = self.page_source
+            time.sleep(1)
+        self.text = strip_tags(page_source)
+
     def authorize(self, username, password):
         self.open_url(reverse('login'))
         self.type_in("#id_username", username)
@@ -47,12 +55,12 @@ class MyDriver(object):
 
     def open_url(self, url):
         self.get('http://localhost:%d' % self.testserver_port + url)
-        self.text = strip_tags(unicode(self.page_source))
+        self._wait_for_page_source()
 
     def click(self, selector):
         """This function also refreshes page text"""
         self.find(selector).click()
-        self.text = strip_tags(unicode(self.page_source))
+        self._wait_for_page_source()
 
     def click_and_wait(self, selector, newselector):
         self.click(selector)
