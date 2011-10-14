@@ -28,9 +28,6 @@ class Command(test.Command):
         if selenium_only:
             selenium = True
 
-        selenium_settings.ORIG_TEST_RUNNER = settings.TEST_RUNNER
-        settings.TEST_RUNNER = selenium_settings.SELENIUM_TEST_RUNNER
-
         TestRunner = get_runner(settings)
         test_runner = TestRunner(verbosity=verbosity, interactive=interactive, failfast=failfast,
                                  selenium=selenium, selenium_only=selenium_only)
