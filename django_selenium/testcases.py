@@ -29,6 +29,7 @@ class MyDriver(object):
         driver = getattr(webdriver, settings.SELENIUM_DRIVER, None)
         assert driver, "settings.SELENIUM_DRIVER contains non-existing driver"
         self.driver = driver()
+        self.testserver_host = settings.SELENIUM_TESTSERVER_HOST
         self.testserver_port = settings.SELENIUM_TESTSERVER_PORT
         self.text = ''
 
@@ -54,7 +55,7 @@ class MyDriver(object):
         self.click("#login-form input[type='submit']")
 
     def open_url(self, url):
-        self.get('http://localhost:%d' % self.testserver_port + url)
+        self.get('http://%s:%d' % self.testserver_host , self.testserver_port + url)
         self._wait_for_page_source()
 
     def click(self, selector):
