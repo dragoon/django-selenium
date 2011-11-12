@@ -55,7 +55,7 @@ class MyDriver(object):
         self.click("#login-form input[type='submit']")
 
     def open_url(self, url):
-        self.get('http://%s:%d' % self.testserver_host , self.testserver_port + url)
+        self.get('http://%s:%d' % (self.testserver_host , self.testserver_port + url))
         self._wait_for_page_source()
 
     def click(self, selector):
