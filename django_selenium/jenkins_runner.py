@@ -1,7 +1,7 @@
 from django_jenkins.runner import CITestSuiteRunner
 from django_selenium.selenium_runner import SeleniumTestRunner
 
-class MyJenkinsRunner(CITestSuiteRunner, SeleniumTestRunner):
+class JenkinsTestRunner(CITestSuiteRunner, SeleniumTestRunner):
     def __init__(self, **kwargs):
         super(MyJenkinsRunner, self).__init__(**kwargs)
         self.selenium = True
