@@ -65,7 +65,7 @@ It has a number of convinient shortcuts to handle frequently used operations, se
 
 .. _Django: http://www.djangoproject.com/
 .. _Selenium: http://seleniumhq.org/
-.. _django-jenkins:https://github.com/kmmbvnr/django-jenkins
+.. _django-jenkins: https://github.com/kmmbvnr/django-jenkins
 
 
 South
