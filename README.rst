@@ -15,6 +15,8 @@ Dependencies
 * Django_ 1.2 and above.
 * Selenium_ 2.5.0 and above.
 
+* django-jenkins_ if you are going to use **JenkinsTestRunner** from this package.
+
 How do I use it?
 ================
 
@@ -47,6 +49,13 @@ And that's it.
 
 To see the integration in action, please check out test application: https://github.com/dragoon/django-selenium-testapp
 
+Django Jenkins
+==============
+
+There is also a special test runner to execute selenium tests using django-jenkins integration:
+``django_selenium.jenkins_runner.JenkinsTestRunner``. You can specify this class for ``TEST_RUNNER`` setting,
+and ``manage.py jenkins`` command will also execute selenim tests and generate reports for them.
+
 MyDriver class
 ==============
 
@@ -55,6 +64,7 @@ It has a number of convinient shortcuts to handle frequently used operations, se
 
 .. _Django: http://www.djangoproject.com/
 .. _Selenium: http://seleniumhq.org/
+.. _django-jenkins:https://github.com/kmmbvnr/django-jenkins
 
 
 South
@@ -74,3 +84,4 @@ command as follow::
 
 
     You still need to have SOUTH_TESTS_MIGRATE = False in your test_settings.py
+
