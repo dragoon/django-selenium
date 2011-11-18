@@ -29,9 +29,12 @@ class MyDriver(object):
         driver = getattr(webdriver, settings.SELENIUM_DRIVER, None)
         assert driver, "settings.SELENIUM_DRIVER contains non-existing driver"
         if settings.SELENIUM_DRIVER == 'Remote':
-            capabilitiy = getattr(webdriver.DesiredCapabilities, settings.SELENIUM_CAPABILITY, None)
-            assert capabilitiy, 'settings.SELENIUM_CAPABILITY contains non-existing capability'
-            self.driver = driver('http://%s:%d/wd/hub' % (settings.SELENIUM_HOST, settings.SELENIUM_PORT), capabilitiy)
+            if isinstance(settings.SELENIUM_CAPABILITY, dict):
+                capability = settings.SELENIUM_CAPABILITY
+            else:
+                capability = getattr(webdriver.DesiredCapabilities, settings.SELENIUM_CAPABILITY, None)
+                assert capability, 'settings.SELENIUM_CAPABILITY contains non-existing capability'
+            self.driver = driver('http://%s:%d/wd/hub' % (settings.SELENIUM_HOST, settings.SELENIUM_PORT), capability)
         else:
             self.driver = driver()
         self.testserver_host = settings.SELENIUM_TESTSERVER_HOST
