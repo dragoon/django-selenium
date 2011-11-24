@@ -61,7 +61,7 @@ class TestServerThread(threading.Thread):
         self._stop_event.set()
         self.join(timeout)
 
-def start_test_server(address='0.0.0.0', port=8000):
+def start_test_server(address='localhost', port=8000):
     server_thread = TestServerThread(address, port)
     server_thread.start()
     server_thread._start_event.wait()

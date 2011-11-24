@@ -28,7 +28,7 @@ class MyDriver(object):
     def __init__(self):
         driver = getattr(webdriver, settings.SELENIUM_DRIVER, None)
         assert driver, "settings.SELENIUM_DRIVER contains non-existing driver"
-        if settings.SELENIUM_DRIVER == 'Remote':
+        if driver is webdriver.Remote:
             if isinstance(settings.SELENIUM_CAPABILITY, dict):
                 capability = settings.SELENIUM_CAPABILITY
             else:
