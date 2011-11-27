@@ -13,7 +13,7 @@ setup(
     download_url=ds.__url__,
 
     description=ds.__summary__,
-    long_description="Selenium testing integration into Django",
+    long_description = open('README.rst').read(),
 
     license=ds.__license__,
     packages=find_packages(),
