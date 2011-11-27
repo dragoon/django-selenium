@@ -48,8 +48,8 @@ Remote
 
 See settings.py file to see some examples.
 
-General
--------
+Common
+------
 
 #. Set ``TEST_RUNNER = 'django_selenium.test_runner.SeleniumTestRunner'``
    or subclass ``SeleniumTestRunner`` to make your own test runner with
