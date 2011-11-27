@@ -17,20 +17,47 @@ Dependencies
 
 * django-jenkins_ if you are going to use **JenkinsTestRunner** from this package.
 
-How do I use it?
-================
+How to use it
+=============
 
-1. Update ``settings.TEST_RUNNER = 'django_selenium.test_runner.SeleniumTestRunner'``
+Define **selenium specific** settings in your **settings.py** file.
+
+Local
+-----
+
+If you plan to run **selenium server locally**, then you should define the following settings:
+
+-  Set ``SELENIUM_PATH`` to point to the selenium-server.jar on your system, for example
+   ``/home/dragoon/selenium-server-2.6.jar``
+
+-  Set ``SELENIUM_DISPLAY`` if you plan to run selenium tests on display other than "``:0``" (on VNCServer/Xvfb for example).
+   See ``settings.py`` for other settings available.
+
+- Set ``SELENIUM_DRIVER`` for corresponding browser driver in selenium.
+
+
+Remote
+------
+
+- Set ``SELENIUM_DRIVER = 'Remote'`` in your settings file.
+
+- Set ``SELENIUM_HOST`` variable to point to the IP/domain name of your remote selenium server.
+
+- Probably set ``SELENIUM_TESTSERVER_HOST`` to **0.0.0.0** for test server to listen on all network interfaces.
+  on each remote host.
+
+See settings.py file to see some examples.
+
+General
+-------
+
+#. Set ``TEST_RUNNER = 'django_selenium.test_runner.SeleniumTestRunner'``
    or subclass ``SeleniumTestRunner`` to make your own test runner with
    extended functionaliity.
-2. Include selenium-specific settings in your own settings file.
-   One setting that you must always define is ``SELENIUM_PATH``.
-   It should point to the selenium-server.jar on your system, for example
-   ``/home/dragoon/selenium-server-2.6.jar``
-   See ``settings.py`` for other settings available.
-3. Write some selenium tests for your apps in a module ``seltests.py``.
+
+#. Write some selenium tests for your apps in a module ``seltests.py``.
    Subclass selenium tests from ``django_selenium.testcases.SeleniumTestCase``.
-4. Add custom management command to override default test command::
+#. Add custom management command to override default test command::
 
        from django_selenium.management.commands import test_selenium
 
