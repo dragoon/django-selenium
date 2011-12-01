@@ -41,10 +41,10 @@ Remote
 
 - Set ``SELENIUM_DRIVER = 'Remote'`` in your settings file.
 
-- Set ``SELENIUM_HOST`` variable to point to the IP/domain name of your remote selenium server.
+- Set ``SELENIUM_HOST`` to point to the IP/hostname of your remote selenium server.
 
-- Probably set ``SELENIUM_TESTSERVER_HOST`` to **0.0.0.0** for test server to listen on all network interfaces.
-  on each remote host.
+- Set ``SELENIUM_TESTSERVER_HOST`` to the IP address/hostname of the machine where test server is running
+  (e.g. **192.168.1.2**).
 
 See settings.py file to see some examples.
 
