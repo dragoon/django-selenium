@@ -54,6 +54,9 @@ class SeleniumTestRunner(DjangoTestSuiteRunner):
         self.test_server = None
         self.selenium_server = None
 
+    def _is_start_selenium_server(self):
+        return bool((settings.SELENIUM_DRIVER == 'Remote') and settings.SELENIUM_PATH)
+
     def build_suite(self, test_labels, extra_tests=None, **kwargs):
         suite = unittest.TestSuite()
 
@@ -88,7 +91,7 @@ class SeleniumTestRunner(DjangoTestSuiteRunner):
             os.environ['DISPLAY'] = settings.SELENIUM_DISPLAY
             # Start test server
             self.test_server = start_test_server(address=settings.SELENIUM_TESTSERVER_HOST, port=settings.SELENIUM_TESTSERVER_PORT)
-            if settings.SELENIUM_PATH:
+            if self._is_start_selenium_server():
                 # Start selenium server
                 self.selenium_server = subprocess.Popen(('java -jar %s' % settings.SELENIUM_PATH).split())
 
@@ -101,7 +104,7 @@ class SeleniumTestRunner(DjangoTestSuiteRunner):
     def _stop_selenium(self):
         if self.selenium:
             # Stop selenium server
-            if settings.SELENIUM_PATH:
+            if self._is_start_selenium_server():
                 selenium_server = self.selenium_server
                 selenium_server.send_signal(signal.SIGINT)
                 if selenium_server.poll() is None:

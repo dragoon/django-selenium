@@ -24,11 +24,10 @@ Define **selenium specific** settings in your **settings.py** file.
 
 Local
 -----
+Local run in this case means that you're using Firefox, Chrome or IE driver, and therefore you don't
+need running selenium server, because these drivers work with the browsers directly.
 
-If you plan to run **selenium server locally**, then you should define the following settings:
-
--  Set ``SELENIUM_PATH`` to point to the selenium-server.jar on your system, for example
-   ``/home/dragoon/selenium-server-2.6.jar``
+So, if you plan to use **selenium locally**, then you should define the following settings:
 
 -  Set ``SELENIUM_DISPLAY`` if you plan to run selenium tests on display other than "``:0``" (on VNCServer/Xvfb for example).
    See ``settings.py`` for other settings available.
@@ -40,6 +39,13 @@ Remote
 ------
 
 - Set ``SELENIUM_DRIVER = 'Remote'`` in your settings file.
+
+- Set ``SELENIUM_CAPABILITY`` to the desired value.
+
+-  Probaly set ``SELENIUM_PATH`` to point to the selenium-server.jar on your system, for example
+   ``/home/dragoon/selenium-server-2.6.jar``. This setting is required if you want to start
+   selenium server along with tests. You don't need this if you keep your selenium server
+   running using other methods.
 
 - Set ``SELENIUM_HOST`` to point to the IP/hostname of your remote selenium server.
 
