@@ -89,7 +89,7 @@ class MyDriver(object):
 
     @wait(timeout=10)
     def wait_for_visible(self, selector, visible=True):
-        return self.find(selector).is_displayed()==visible
+        return self.find(selector).is_displayed() == visible
 
     def get_title(self):
         return self.title
