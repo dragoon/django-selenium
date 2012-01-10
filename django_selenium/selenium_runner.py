@@ -54,6 +54,9 @@ class SeleniumTestRunner(DjangoTestSuiteRunner):
         self.test_server = None
         self.selenium_server = None
 
+    def _is_start_selenium_server(self):
+        return bool((settings.SELENIUM_DRIVER == 'Remote') and settings.SELENIUM_PATH)
+
     def build_suite(self, test_labels, extra_tests=None, **kwargs):
         suite = unittest.TestSuite()
 
@@ -83,36 +86,34 @@ class SeleniumTestRunner(DjangoTestSuiteRunner):
 
     def _start_selenium(self):
         if self.selenium:
-            assert settings.SELENIUM_PATH, "selenium path is not set"
 
             # Set display variable
             os.environ['DISPLAY'] = settings.SELENIUM_DISPLAY
             # Start test server
-            self.test_server = start_test_server(port=settings.SELENIUM_TESTSERVER_PORT)
+            self.test_server = start_test_server(address=settings.SELENIUM_TESTSERVER_HOST, port=settings.SELENIUM_TESTSERVER_PORT)
+            if self._is_start_selenium_server():
+                # Start selenium server
+                self.selenium_server = subprocess.Popen(('java -jar %s' % settings.SELENIUM_PATH).split())
 
-            # Start selenium server
-            self.selenium_server = subprocess.Popen(('java -jar %s' % settings.SELENIUM_PATH).split())
-
-            # Waiting for server to be ready
-            if not wait_until_connectable(4444):
-                self.selenium_server.kill()
-                self.test_server.stop()
-                assert False, "selenium server does not respond"
+                # Waiting for server to be ready
+                if not wait_until_connectable(4444):
+                    self.selenium_server.kill()
+                    self.test_server.stop()
+                    assert False, "selenium server does not respond"
 
     def _stop_selenium(self):
         if self.selenium:
             # Stop selenium server
-            selenium_server = self.selenium_server
-            selenium_server.send_signal(signal.SIGINT)
-            if selenium_server.poll() is None:
-                selenium_server.kill()
-                selenium_server.wait()
-
+            if self._is_start_selenium_server():
+                selenium_server = self.selenium_server
+                selenium_server.send_signal(signal.SIGINT)
+                if selenium_server.poll() is None:
+                    selenium_server.kill()
+                    selenium_server.wait()
             # Stop test server
             self.test_server.stop()
 
     def run_tests(self, test_labels, extra_tests=None, **kwargs):
-
         self._start_selenium()
         results = super(SeleniumTestRunner, self).run_tests(test_labels, extra_tests, **kwargs)
         self._stop_selenium()

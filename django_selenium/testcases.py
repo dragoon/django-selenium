@@ -28,7 +28,16 @@ class MyDriver(object):
     def __init__(self):
         driver = getattr(webdriver, settings.SELENIUM_DRIVER, None)
         assert driver, "settings.SELENIUM_DRIVER contains non-existing driver"
-        self.driver = driver()
+        if driver is webdriver.Remote:
+            if isinstance(settings.SELENIUM_CAPABILITY, dict):
+                capability = settings.SELENIUM_CAPABILITY
+            else:
+                capability = getattr(webdriver.DesiredCapabilities, settings.SELENIUM_CAPABILITY, None)
+                assert capability, 'settings.SELENIUM_CAPABILITY contains non-existing capability'
+            self.driver = driver('http://%s:%d/wd/hub' % (settings.SELENIUM_HOST, settings.SELENIUM_PORT), capability)
+        else:
+            self.driver = driver()
+        self.testserver_host = settings.SELENIUM_TESTSERVER_HOST
         self.testserver_port = settings.SELENIUM_TESTSERVER_PORT
         self.text = ''
 
@@ -38,6 +47,14 @@ class MyDriver(object):
         except AttributeError:
             attr = self.driver.__getattribute__(name)
         return attr
+
+    def _wait_for_page_source(self):
+        page_source = self.page_source
+        time.sleep(1)
+        while page_source!=self.page_source:
+            page_source = self.page_source
+            time.sleep(1)
+        self.update_text()
 
     def authorize(self, username, password):
         self.open_url(reverse('login'))
@@ -49,13 +66,13 @@ class MyDriver(object):
         self.text = strip_tags(unicode(self.page_source))
 
     def open_url(self, url):
-        self.get('http://localhost:%d' % self.testserver_port + url)
-        self.update_text()
+        self.get('http://%s:%d' % (self.testserver_host , self.testserver_port) + url)
+        self._wait_for_page_source()
 
     def click(self, selector):
         """This function also refreshes page text"""
         self.find(selector).click()
-        self.update_text()
+        self._wait_for_page_source()
 
     def click_and_wait(self, selector, newselector):
         self.click(selector)

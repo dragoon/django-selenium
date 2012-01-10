@@ -1,6 +1,15 @@
 #!/usr/bin/env python
+import os.path
+
 from setuptools import setup, find_packages
 import django_selenium as ds
+
+# Utility function to read the README file.
+# Used for the long_description.  It's nice, because now 1) we have a top level
+# README file and 2) it's easier to type in the README file than to put a raw
+# string in below ...
+def read(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
     name='django-selenium',
@@ -13,7 +22,7 @@ setup(
     download_url=ds.__url__,
 
     description=ds.__summary__,
-    long_description="Selenium testing integration into Django",
+    long_description = read('README.rst'),
 
     license=ds.__license__,
     packages=find_packages(),
@@ -21,7 +30,7 @@ setup(
     requires=['django (>=1.2)', 'selenium (>= 2.5)'],
 
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
