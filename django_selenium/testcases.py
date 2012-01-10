@@ -45,14 +45,17 @@ class MyDriver(object):
         self.type_in("#id_password", password)
         self.click("#login-form input[type='submit']")
 
+    def update_text(self):
+        self.text = strip_tags(unicode(self.page_source))
+
     def open_url(self, url):
         self.get('http://localhost:%d' % self.testserver_port + url)
-        self.text = strip_tags(unicode(self.page_source))
+        self.update_text()
 
     def click(self, selector):
         """This function also refreshes page text"""
         self.find(selector).click()
-        self.text = strip_tags(unicode(self.page_source))
+        self.update_text()
 
     def click_and_wait(self, selector, newselector):
         self.click(selector)
