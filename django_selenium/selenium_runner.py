@@ -111,11 +111,14 @@ class SeleniumTestRunner(DjangoTestSuiteRunner):
                     selenium_server.kill()
                     selenium_server.wait()
             # Stop test server
-            self.test_server.stop()
+            if self.test_server:
+                self.test_server.stop()
 
     def run_tests(self, test_labels, extra_tests=None, **kwargs):
         self._start_selenium()
-        results = super(SeleniumTestRunner, self).run_tests(test_labels, extra_tests, **kwargs)
-        self._stop_selenium()
+        try:
+            results = super(SeleniumTestRunner, self).run_tests(test_labels, extra_tests, **kwargs)
+        finally:
+            self._stop_selenium()
 
         return results
