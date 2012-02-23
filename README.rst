@@ -57,7 +57,7 @@ See settings.py file to see some examples.
 Common
 ------
 
-#. Set ``TEST_RUNNER = 'django_selenium.test_runner.SeleniumTestRunner'``
+#. Set ``TEST_RUNNER = 'django_selenium.selenium_runner.SeleniumTestRunner'``
    or subclass ``SeleniumTestRunner`` to make your own test runner with
    extended functionaliity.
 
@@ -88,7 +88,7 @@ Django Jenkins
 There is also a special test runner to execute selenium tests using django-jenkins integration:
 ``django_selenium.jenkins_runner.JenkinsTestRunner``.
 
-You can specify this class for ``TEST_RUNNER`` setting, and ``manage.py jenkins`` command will also execute selenium tests and generate reports for them.
+You can specify this class for ``JENKINS_TEST_RUNNER`` setting, and ``manage.py jenkins`` command will also execute selenium tests and generate reports for them.
 
 MyDriver class
 ==============
