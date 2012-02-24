@@ -6,6 +6,7 @@ import signal
 import unittest
 
 from django_selenium import settings
+import django.test.simple 
 from django.test.simple import reorder_suite
 from django.test.testcases import TestCase
 from django_selenium.selenium_server import start_test_server
@@ -57,11 +58,11 @@ class SeleniumTestRunner(DjangoTestSuiteRunner):
     def _is_start_selenium_server(self):
         return bool((settings.SELENIUM_DRIVER == 'Remote') and settings.SELENIUM_PATH)
 
-    def build_suite(self, test_labels, extra_tests=None, **kwargs):
+    def build_suite(self, test_labels, *args, **kwargs):
         suite = unittest.TestSuite()
 
         if not self.selenium_only:
-            suite = super(SeleniumTestRunner, self).build_suite(test_labels, extra_tests, **kwargs)
+            suite = super(SeleniumTestRunner, self).build_suite(test_labels, *args, **kwargs)
 
         if self.selenium:
             # Hack to exclude doctests from selenium-only, they are already present
@@ -72,17 +73,24 @@ class SeleniumTestRunner(DjangoTestSuiteRunner):
                         app = get_app(label)
                         setattr(app, 'suite', unittest.TestSuite)
 
-            # Add tests from seltests.py modules
-            import django.test.simple
-            orig_test_module = django.test.simple.TEST_MODULE
-            django.test.simple.TEST_MODULE = SELTEST_MODULE
-            try:
-                sel_suite = super(SeleniumTestRunner, self).build_suite(test_labels, extra_tests, **kwargs)
-                suite.addTest(sel_suite)
-            finally:
-                 django.test.simple.TEST_MODULE = orig_test_module
+            
+            sel_suite = self._get_seltests(test_labels, *args, **kwargs)
+            suite.addTest(sel_suite)
 
         return reorder_suite(suite, (TestCase,))
+
+    def _get_seltests(self, *args, **kwargs):
+        # Add tests from seltests.py modules
+        import django.test.simple
+        orig_test_module = django.test.simple.TEST_MODULE
+        django.test.simple.TEST_MODULE = SELTEST_MODULE
+        try:
+            sel_suite = DjangoTestSuiteRunner.build_suite(self, *args, **kwargs)
+        finally:
+             django.test.simple.TEST_MODULE = orig_test_module
+
+        return sel_suite
+
 
     def _start_selenium(self):
         if self.selenium:
@@ -111,11 +119,14 @@ class SeleniumTestRunner(DjangoTestSuiteRunner):
                     selenium_server.kill()
                     selenium_server.wait()
             # Stop test server
-            self.test_server.stop()
+            if self.test_server:
+                self.test_server.stop()
 
     def run_tests(self, test_labels, extra_tests=None, **kwargs):
         self._start_selenium()
-        results = super(SeleniumTestRunner, self).run_tests(test_labels, extra_tests, **kwargs)
-        self._stop_selenium()
+        try:
+            results = super(SeleniumTestRunner, self).run_tests(test_labels, extra_tests, **kwargs)
+        finally:
+            self._stop_selenium()
 
         return results
