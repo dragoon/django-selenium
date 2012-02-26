@@ -6,7 +6,6 @@ import signal
 import unittest
 
 from django_selenium import settings
-import django.test.simple 
 from django.test.simple import reorder_suite
 from django.test.testcases import TestCase
 from django_selenium.selenium_server import start_test_server
@@ -73,7 +72,7 @@ class SeleniumTestRunner(DjangoTestSuiteRunner):
                         app = get_app(label)
                         setattr(app, 'suite', unittest.TestSuite)
 
-            
+
             sel_suite = self._get_seltests(test_labels, *args, **kwargs)
             suite.addTest(sel_suite)
 
