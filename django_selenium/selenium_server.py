@@ -1,6 +1,7 @@
 import socket
 from django.core.servers import basehttp
 from django.core.handlers.wsgi import WSGIHandler
+from django.contrib.staticfiles.handlers import StaticFilesHandler
 
 import threading
 
@@ -34,7 +35,7 @@ class TestServerThread(threading.Thread):
 
     def run(self):
         try:
-            handler = basehttp.AdminMediaHandler(WSGIHandler())
+            handler = StaticFilesHandler(basehttp.AdminMediaHandler(WSGIHandler()))
             def test_app(environ, start_response):
                 if environ['REQUEST_METHOD'] == 'HEAD':
                     start_response('200 OK', [])
