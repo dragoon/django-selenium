@@ -1,4 +1,8 @@
 ========================
+You should not use this library after Django 1.4 Release, as it will have build-in Selenium support.
+========================
+
+========================
 Django Selenium Integration
 ========================
 
