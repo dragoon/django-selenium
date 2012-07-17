@@ -10,12 +10,14 @@ from django.utils.html import strip_tags
 
 from django_selenium import settings
 
-def wait(timeout=10):
+def wait(timeout=settings.SELENIUM_DRIVER_TIMEOUT):
     def inner_wait(func):
         @wraps(func)
         def wrapper(self, *args, **kwargs):
-            res = func(self, *args, **kwargs)
             i = timeout
+            if kwargs.has_key('timeout'):
+                i = kwargs.pop('timeout')
+            res = func(self, *args, **kwargs)
             while not res and i:
                 time.sleep(1)
                 res = func(self, *args, **kwargs)
@@ -104,11 +106,11 @@ class MyDriver(object):
     def get_text(self, selector):
         return self.find(selector).text
 
-    @wait(timeout=10)
+    @wait
     def wait_for_text(self, selector, text):
         return text in self.find(selector).text
 
-    @wait(timeout=10)
+    @wait
     def wait_for_visible(self, selector, visible=True):
         return self.find(selector).is_displayed() == visible
 
