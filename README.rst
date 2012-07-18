@@ -1,6 +1,13 @@
 ========================
-You should not use this library after Django 1.4 Release, as it will have built-in Selenium support.
+Django 1.4 supported now. Use SeleniumLiveTestCase.
 ========================
+
+Django 1.4 got built-in selenium support, and you can continue to use **django-selenium** with it,
+while keeping the same shortcut webdriver functions. How to use django-selenium on django 1.4:
+
+* specify preferred webdriver in the **SELENIUM_DRIVER** setting
+* create test classes subclassing the **SeleniumLiveTestCase** inside the standard **tests.py** file.
+
 
 ========================
 Django Selenium Integration
