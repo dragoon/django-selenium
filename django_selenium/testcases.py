@@ -9,14 +9,12 @@ from django.utils.html import strip_tags
 
 from django_selenium import settings
 
-def wait(timeout=settings.SELENIUM_DRIVER_TIMEOUT):
+def wait(timeout=10):
     def inner_wait(func):
         @wraps(func)
         def wrapper(self, *args, **kwargs):
-            i = timeout
-            if kwargs.has_key('timeout'):
-                i = kwargs.pop('timeout')
             res = func(self, *args, **kwargs)
+            i = timeout
             while not res and i:
                 time.sleep(1)
                 res = func(self, *args, **kwargs)
@@ -39,8 +37,7 @@ class MyDriver(object):
             self.driver = driver('http://%s:%d/wd/hub' % (settings.SELENIUM_HOST, settings.SELENIUM_PORT), capability)
         else:
             self.driver = driver()
-        self.testserver_host = settings.SELENIUM_TESTSERVER_HOST
-        self.testserver_port = settings.SELENIUM_TESTSERVER_PORT
+        self.live_server_url = 'http://%s:%s' % (settings.SELENIUM_TESTSERVER_HOST , str(settings.SELENIUM_TESTSERVER_PORT))
         self.text = ''
 
     def __getattribute__(self, name):
@@ -68,7 +65,7 @@ class MyDriver(object):
         self.text = strip_tags(unicode(self.page_source))
 
     def open_url(self, url):
-        self.get('http://%s:%d' % (self.testserver_host , self.testserver_port) + url)
+        self.get('%s%s' % (self.live_server_url, url))
         self._wait_for_page_source()
 
     def click(self, selector):
@@ -102,11 +99,11 @@ class MyDriver(object):
     def get_text(self, selector):
         return self.find(selector).text
 
-    @wait
+    @wait(timeout=10)
     def wait_for_text(self, selector, text):
         return text in self.find(selector).text
 
-    @wait
+    @wait(timeout=10)
     def wait_for_visible(self, selector, visible=True):
         return self.find(selector).is_displayed() == visible
 
