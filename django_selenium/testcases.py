@@ -1,5 +1,6 @@
 from functools import wraps
 from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 import time
 
 from django.db import transaction
@@ -48,12 +49,15 @@ class MyDriver(object):
         return attr
 
     def _wait_for_page_source(self):
-        page_source = self.page_source
-        time.sleep(1)
-        while page_source!=self.page_source:
+        try:
             page_source = self.page_source
             time.sleep(1)
-        self.update_text()
+            while page_source!=self.page_source:
+                page_source = self.page_source
+                time.sleep(1)
+            self.update_text()
+        except WebDriverException:
+            pass
 
     def authorize(self, username, password):
         self.open_url(reverse('login'))
@@ -94,6 +98,7 @@ class MyDriver(object):
             text = alert.text
         alert.dismiss()
         self.switch_to_default_content()
+        self.update_text()
         return text
 
     def get_text(self, selector):
