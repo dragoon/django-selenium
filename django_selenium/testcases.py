@@ -10,21 +10,20 @@ from django.utils.html import strip_tags
 
 from django_selenium import settings
 
-def wait(timeout=settings.SELENIUM_DRIVER_TIMEOUT):
-    def inner_wait(func):
-        @wraps(func)
-        def wrapper(self, *args, **kwargs):
-            i = timeout
-            if kwargs.has_key('timeout'):
-                i = kwargs.pop('timeout')
+
+def wait(func):
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        i = settings.SELENIUM_DRIVER_TIMEOUT
+        if kwargs.has_key('timeout'):
+            i = kwargs.pop('timeout')
+        res = func(self, *args, **kwargs)
+        while not res and i:
+            time.sleep(1)
             res = func(self, *args, **kwargs)
-            while not res and i:
-                time.sleep(1)
-                res = func(self, *args, **kwargs)
-                i-=1
-            return res
-        return wrapper
-    return inner_wait
+            i-=1
+        return res
+    return wrapper
 
 
 class MyDriver(object):
