@@ -1,6 +1,6 @@
-========================
+====================================================
 Django 1.4 supported now. Use SeleniumLiveTestCase.
-========================
+====================================================
 
 Django 1.4 got built-in selenium support, and you can continue to use **django-selenium** with it,
 while keeping the same shortcut webdriver functions. How to use django-selenium on django 1.4:
@@ -9,9 +9,9 @@ while keeping the same shortcut webdriver functions. How to use django-selenium 
 * create test classes subclassing the **SeleniumLiveTestCase** inside the standard **tests.py** file.
 
 
-========================
+================================
 Django Selenium Integration
-========================
+================================
 
 .. contents::
 
@@ -19,6 +19,7 @@ What is it?
 ===========
 | **Django-selenium** is a toolset that provides seamless integration for Django_ framework
   with a Selenium_ testing tool.
+
 It allows to write and execute **selenium tests** just as usual ones.
 
 Dependencies
@@ -105,6 +106,7 @@ MyDriver class
 ==============
 
 | ``MyDriver`` class from ``django_selenium.tescases`` offers extended functionality on top of ``selenium.webdriver.remote.webdriver.WebDriver`` class.
+
 It has a number of convinient shortcuts to handle frequently used operations, see source code for details, documentation will be here soon.
 
 .. _Django: http://www.djangoproject.com/
@@ -129,4 +131,3 @@ command as follow::
 
 
     You still need to have SOUTH_TESTS_MIGRATE = False in your test_settings.py
-
