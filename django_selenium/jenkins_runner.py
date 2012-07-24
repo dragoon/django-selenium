@@ -8,11 +8,11 @@ class JenkinsTestRunner(CITestSuiteRunner, SeleniumTestRunner):
         super(JenkinsTestRunner, self).__init__(**kwargs)
         self.selenium = True
 
-    def build_suite(self, test_labels, **kwargs):
+    def build_suite(self, test_labels, extra_tests=None, **kwargs):
         # args and kwargs saved in instance to use in the signal below
         self.test_labels = test_labels
         self.build_suite_kwargs = kwargs
-        suite = CITestSuiteRunner.build_suite(self, test_labels, **kwargs)
+        suite = CITestSuiteRunner.build_suite(self, test_labels, extra_tests, **kwargs)
         return suite
 
     def run_tests(self, test_labels, extra_tests=None, **kwargs):
