@@ -80,8 +80,7 @@ class MyDriver(object):
 
     def click_and_wait(self, selector, newselector):
         self.click(selector)
-        res = self.find(newselector).is_displayed()
-        return res
+        return self.wait_element_present(newselector)
 
     def is_element_present(self, selector):
         return len(self.find_elements_by_css_selector(selector)) > 0
@@ -112,6 +111,10 @@ class MyDriver(object):
     @wait
     def wait_for_visible(self, selector, visible=True):
         return self.find(selector).is_displayed() == visible
+
+    @wait
+    def wait_element_present(self, selector, present=True):
+        return self.is_element_present(selector)==present
 
     def get_title(self):
         return self.title
