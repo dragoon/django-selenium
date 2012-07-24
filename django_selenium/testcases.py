@@ -154,7 +154,6 @@ class SeleniumTestCase(TransactionTestCase):
         import socket
         socket.setdefaulttimeout(settings.SELENIUM_TIMEOUT)
         self.driver = MyDriver()
-        self.driver.implicitly_wait(settings.SELENIUM_TIMEOUT)
 
     def tearDown(self):
         self.driver.quit()
