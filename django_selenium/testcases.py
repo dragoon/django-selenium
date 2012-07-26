@@ -2,6 +2,7 @@ from functools import wraps
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 import time
+import os
 
 from django.db import transaction
 from django.core.urlresolvers import reverse
@@ -103,6 +104,14 @@ class MyDriver(object):
 
     def get_text(self, selector):
         return self.find(selector).text
+
+    def drop_image(self, file_path, droparea_selector, append_to):
+        """drop image to the element specified by selector"""
+        self.execute_script("file_input = window.$('<input/>').attr({id: 'file_input', type:'file'}).appendTo('" + append_to + "');")
+        self.find('#file_input').send_keys(os.path.join(os.getcwd(), file_path))
+        self.execute_script('fileList = Array();fileList.push(file_input.get(0).files[0]);')
+        self.execute_script("e = $.Event('drop'); e.originalEvent = {dataTransfer : { files : fileList } }; $('" + droparea_selector + "').trigger(e);")
+        self.execute_script("$('#file_input').remove()")
 
     @wait
     def wait_for_text(self, selector, text):
