@@ -16,13 +16,7 @@ class JenkinsTestRunner(CITestSuiteRunner, SeleniumTestRunner):
         return suite
 
     def run_tests(self, test_labels, extra_tests=None, **kwargs):
-
-        self._start_selenium()
-        try:
-            results = super(JenkinsTestRunner, self).run_tests(test_labels, extra_tests, **kwargs)
-        finally:
-            self._stop_selenium()
-
+        results = super(JenkinsTestRunner, self).run_tests(test_labels, extra_tests, **kwargs)
         return results
 
 
