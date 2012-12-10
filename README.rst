@@ -119,7 +119,7 @@ South
 
 You use South to migrate your applications ? Ok, south is also overriding the
 django test commands, therefore you will need to modify your custom management
-command as follow::
+command as follows::
 
     from django_selenium.management.commands import test_selenium
     from south.management.commands import test as test_south
@@ -130,4 +130,8 @@ command as follow::
            super(Command, self).handle(*test_labels, **options)
 
 
-    You still need to have SOUTH_TESTS_MIGRATE = False in your test_settings.py
+In addition, you need to set the following:
+
+- ``SOUTH_TESTS_MIGRATE = False in your test_settings.py``
+
+- if you called your command "test" (test.py), then the app containing your command should come after the "south" in the ``INSTALLED_APPS`` list.
