@@ -1,6 +1,6 @@
-====================================================
-Django 1.4 supported now. Use SeleniumLiveTestCase.
-====================================================
+=================
+Django >=1.4 note
+=================
 
 Django 1.4 got built-in selenium support, and you can continue to use **django-selenium** with it,
 while keeping the same shortcut webdriver functions. How to use django-selenium on django 1.4:
