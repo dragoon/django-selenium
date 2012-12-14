@@ -27,7 +27,7 @@ setup(
     license=ds.__license__,
     packages=find_packages(),
 
-    requires=['django (>=1.2)', 'selenium (>= 2.5)'],
+    requires=['django (>=1.2)', 'selenium (>= 2.28)'],
 
     classifiers=[
         'Development Status :: 4 - Beta',
