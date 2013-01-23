@@ -1,12 +1,12 @@
 from django.core.urlresolvers import reverse
-from django_selenium.testcases import SeleniumTestCase
+from django_selenium.livetestcases import SeleniumLiveTestCase
 
-class MyTestCase(SeleniumTestCase):
+class MyTestCase(SeleniumLiveTestCase):
 
     def test_home(self):
-        self.open_url(reverse('home'))
+        self.driver.open_url(reverse('home'))
         import time
         # Sleep to check browser is opened
         time.sleep(10)
-        self.failUnless(self.is_text_present('Test Page'))
-        self.assertEquals(self.get_title(), 'Home')
+        self.failUnless(self.driver.is_text_present('Test Page'))
+        self.assertEquals(self.driver.get_title(), 'Home')
