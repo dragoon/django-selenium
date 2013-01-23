@@ -6,6 +6,7 @@ syntax: glob
 .pydevproject
 .cache/*
 .idea/*
+.tox
 
 #temp files
 *.pyc
