@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/dragoon/django-selenium.png
+   :target: https://travis-ci.org/dragoon/django-selenium
+
 =================
 Django >=1.4 note
 =================
