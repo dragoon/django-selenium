@@ -1,5 +1,7 @@
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url
+from core.views import SampleSearchView
 
-urlpatterns = patterns('django.views.generic.simple',
-    url(r'^', 'direct_to_template', {'template': 'home.html'}, name='home'),
+
+urlpatterns = patterns('',
+   url(r'^$', SampleSearchView.as_view(), name='main'),
 )

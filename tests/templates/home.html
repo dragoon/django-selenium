@@ -1,10 +1,31 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
-<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/normalize.css"/>
+    <title>Sample Test Page</title>
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.min.css"/>
+    <script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/boostrap.min.js"></script>
 </head>
 <body>
-Test Page
+
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <h3>{% trans "Sample django-selenium test interface: Search" %}</h3>
+            <form class="form-search" method="POST" action="{% url main %}">
+                {% csrf_token %}
+                {% for field in form %}
+                    {{ field }}
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="span12" id="success">
+            {{ success }}
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
