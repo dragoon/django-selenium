@@ -27,6 +27,23 @@ def wait(func):
     return wrapper
 
 
+class SeleniumElement(object):
+
+    def __init__(self, elements):
+        self.elements = elements
+
+    def __getattribute__(self, name):
+        """
+        Pass ``__getattribute__`` directly to the first array element.
+        """
+        attr = object.__getattribute__(self, 'elements')[0].__getattribute__(name)
+        return attr
+
+    def __getitem__(self, key):
+        """Return item from the internal sequence, bypassing ``__getattribute__``"""
+        return object.__getattribute__(self, 'elements')[key]
+
+
 class MyDriver(object):
     def __init__(self):
         driver = getattr(webdriver, settings.SELENIUM_DRIVER, None)
@@ -132,7 +149,7 @@ class MyDriver(object):
         return self.find(selector).get_attribute('value')
 
     def find(self, cssselector):
-        return self.find_element_by_css_selector(cssselector)
+        return SeleniumElement(self.find_elements_by_css_selector(cssselector))
 
     def select(self, selector, value):
         self.click(selector + (" option[value='%s']" % value))
