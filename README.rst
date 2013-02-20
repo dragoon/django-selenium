@@ -20,10 +20,11 @@ Django Selenium Integration
 
 What is it?
 ===========
-| **Django-selenium** is a toolset that provides seamless integration for Django_ framework
-  with a Selenium_ testing tool.
+| **Django-selenium** is a library that provides seamless integration for Django_ framework
+  with a Selenium_ testing tool. Additionally it provides syntactic sugar for writing and
+  maintaining selenium tests (see `MyDriver class`_ section).
 
-It allows to write and execute **selenium tests** just as usual ones.
+It allows to write and execute **selenium tests** just as normal ones.
 
 Dependencies
 ============
@@ -74,7 +75,7 @@ Common
 
 #. Set ``TEST_RUNNER = 'django_selenium.selenium_runner.SeleniumTestRunner'``
    or subclass ``SeleniumTestRunner`` to make your own test runner with
-   extended functionaliity.
+   extended functionality.
 
 #. Write some selenium tests for your apps in a module ``seltests.py``.
    Subclass selenium tests from ``django_selenium.testcases.SeleniumTestCase``.
@@ -95,7 +96,7 @@ Common
 
 And that's it.
 
-To see the integration in action, please check out test application: https://github.com/dragoon/django-selenium-testapp
+To see the integration in action, check out the test application included in the source.
 
 Django Jenkins
 ==============
@@ -108,9 +109,12 @@ You can specify this class for ``JENKINS_TEST_RUNNER`` setting, and ``manage.py 
 MyDriver class
 ==============
 
-| ``MyDriver`` class from ``django_selenium.tescases`` offers extended functionality on top of ``selenium.webdriver.remote.webdriver.WebDriver`` class.
+| ``MyDriver`` class from ``django_selenium.testcases`` offers extended functionality on top of
+``selenium.webdriver.remote.webdriver.WebDriver`` class.
 
-It has a number of convinient shortcuts to handle frequently used operations, see source code for details, documentation will be here soon.
+It has a number of convenient shortcuts to handle frequently used operations
+
+- Documentation
 
 .. _Django: http://www.djangoproject.com/
 .. _Selenium: http://seleniumhq.org/
