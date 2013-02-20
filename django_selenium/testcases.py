@@ -16,32 +16,42 @@ def wait(func):
     @wraps(func)
     def wrapper(self, *args, **kwargs):
         i = settings.SELENIUM_DRIVER_TIMEOUT
-        if kwargs.has_key('timeout'):
+        if 'timeout' in kwargs:
             i = kwargs.pop('timeout')
         res = func(self, *args, **kwargs)
         while not res and i:
             time.sleep(1)
             res = func(self, *args, **kwargs)
-            i-=1
+            i -= 1
         return res
     return wrapper
 
 
 class SeleniumElement(object):
 
-    def __init__(self, elements):
+    def __init__(self, elements, selector):
+        """Keep selector for key errors"""
         self.elements = elements
+        self.selector = selector
 
     def __getattribute__(self, name):
         """
         Pass ``__getattribute__`` directly to the first array element.
         """
-        attr = object.__getattribute__(self, 'elements')[0].__getattribute__(name)
+        try:
+            attr = object.__getattribute__(self, 'elements')[0].__getattribute__(name)
+        except IndexError:
+            raise NoElementException(u'No elements found for selector: {0}'\
+                .format(object.__getattribute__(self, 'selector')))
         return attr
 
     def __getitem__(self, key):
         """Return item from the internal sequence, bypassing ``__getattribute__``"""
         return object.__getattribute__(self, 'elements')[key]
+
+
+class NoElementException(Exception):
+    pass
 
 
 class MyDriver(object):
@@ -71,7 +81,7 @@ class MyDriver(object):
         try:
             page_source = self.page_source
             time.sleep(1)
-            while page_source!=self.page_source:
+            while page_source != self.page_source:
                 page_source = self.page_source
                 time.sleep(1)
             self.update_text()
@@ -140,7 +150,7 @@ class MyDriver(object):
 
     @wait
     def wait_element_present(self, selector, present=True):
-        return self.is_element_present(selector)==present
+        return self.is_element_present(selector) == present
 
     def get_title(self):
         return self.title
@@ -149,7 +159,7 @@ class MyDriver(object):
         return self.find(selector).get_attribute('value')
 
     def find(self, cssselector):
-        return SeleniumElement(self.find_elements_by_css_selector(cssselector))
+        return SeleniumElement(self.find_elements_by_css_selector(cssselector), cssselector)
 
     def select(self, selector, value):
         self.click(selector + (" option[value='%s']" % value))
@@ -159,13 +169,14 @@ class MyDriver(object):
         elem.clear()
         elem.send_keys(text)
 
+
 class SeleniumTestCase(TransactionTestCase):
 
     def __getattribute__(self, name):
         try:
             attr = object.__getattribute__(self, name)
         except AttributeError:
-            attr = object.__getattribute__(self,'driver').__getattribute__(name)
+            attr = object.__getattribute__(self, 'driver').__getattribute__(name)
         return attr
 
     def _fixture_setup(self):
@@ -183,4 +194,3 @@ class SeleniumTestCase(TransactionTestCase):
 
     def tearDown(self):
         self.driver.quit()
-
