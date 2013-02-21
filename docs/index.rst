@@ -116,8 +116,9 @@ MyDriver class
 This class contains a number of convenient shortcuts to handle frequently used operations
 described below:
 
-.. automodule:: testcases
+.. autoclass:: testcases.MyDriver
     :members:
+    :undoc-members:
 
 .. _Django: http://www.djangoproject.com/
 .. _Selenium: http://seleniumhq.org/

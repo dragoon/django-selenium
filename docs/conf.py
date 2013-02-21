@@ -17,11 +17,13 @@ import sys, os
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('../django_selenium'))
+import django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 
 # -- General configuration -----------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
-#needs_sphinx = '1.0'
+needs_sphinx = '1.0'
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
@@ -41,7 +43,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'django-selenium'
-copyright = u'2013, Roman Prokofyev'
+copyright = u'2013, Roman Prokofyev & Contributors'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
