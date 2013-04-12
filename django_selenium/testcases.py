@@ -95,28 +95,42 @@ class MyDriver(object):
         self.click("#login-form input[type='submit']")
 
     def update_text(self):
+        """
+        Update text content of the current page.
+        Use in case you cannot find text that is actually present on the page.
+        """
         self.text = strip_tags(unicode(self.page_source))
 
     def open_url(self, url):
+        """Open the specified url and wait until page source is fully loaded."""
         self.get('%s%s' % (self.live_server_url, url))
         self._wait_for_page_source()
 
     def click(self, selector):
-        """This function also refreshes page text"""
+        """
+        Perform click on the specified CSS selector.
+        Also refreshes page text."""
         self.find(selector).click()
         self._wait_for_page_source()
 
     def click_and_wait(self, selector, newselector):
+        
         self.click(selector)
         return self.wait_element_present(newselector)
 
     def is_element_present(self, selector):
+        """Check if one or more elements specified by CSS selector are present on the current page."""
         return len(self.find_elements_by_css_selector(selector)) > 0
 
     def is_text_present(self, text):
+        """Check if specified text is present on the current page."""
         return text in self.text
 
     def get_alert_text(self):
+        """
+        Get text of the current alert and close it.
+        :returns: alert text
+        """
         alert = self.switch_to_alert()
         # Selenium can return either dict or text,
         # TODO: Need to investigate why
@@ -133,7 +147,7 @@ class MyDriver(object):
         return self.find(selector).text
 
     def drop_image(self, file_path, droparea_selector, append_to):
-        """drop image to the element specified by selector"""
+        """Drop image to the element specified by selector"""
         self.execute_script("file_input = window.$('<input/>').attr({id: 'file_input', type:'file'}).appendTo('" + append_to + "');")
         self.find('#file_input').send_keys(os.path.join(os.getcwd(), file_path))
         self.execute_script('fileList = Array();fileList.push(file_input.get(0).files[0]);')
