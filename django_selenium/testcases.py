@@ -108,13 +108,19 @@ class MyDriver(object):
 
     def click(self, selector):
         """
-        Perform click on the specified CSS selector.
-        Also refreshes page text."""
+        :param selector: CSS selector of the element to be clicked on.
+        Performs click on the specified CSS selector.
+        Also refreshes page text.
+        """
         self.find(selector).click()
         self._wait_for_page_source()
 
     def click_and_wait(self, selector, newselector):
-        
+        """
+        :param selector: CSS selector of the element to be clicked on.
+        :param newselector: CSS selector of the new element to wait for.
+        Calls click function and then waits for element presense on the updated page.
+        """
         self.click(selector)
         return self.wait_element_present(newselector)
 
@@ -173,6 +179,10 @@ class MyDriver(object):
         return self.find(selector).get_attribute('value')
 
     def find(self, cssselector):
+        """
+        :returns: element specified by a CSS selector ``cssselector``
+        :rtype: SeleniumElement
+        """
         return SeleniumElement(self.find_elements_by_css_selector(cssselector), cssselector)
 
     def select(self, selector, value):
