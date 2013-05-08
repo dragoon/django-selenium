@@ -4,7 +4,7 @@ python:
 #  - "3.2"
   
 env:
-  - TOXENV=py27
+  - TOXENV=django14-py27,django15-py27
 # command to install dependencies
 install:
   - "pip install -r requirements.txt --use-mirrors"
