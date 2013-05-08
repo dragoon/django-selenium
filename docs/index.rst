@@ -29,7 +29,7 @@ It allows to write and execute **selenium tests** just as normal ones.
 
 Dependencies
 ============
-* Django_ 1.2 and above.
+* Django_ 1.3 and above.
 * Selenium_ 2.5.0 and above.
 
 * django-jenkins_ if you are going to use **JenkinsTestRunner** from this package.
