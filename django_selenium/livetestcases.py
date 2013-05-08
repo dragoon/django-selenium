@@ -17,5 +17,5 @@ class SeleniumLiveTestCase(LiveServerTestCase):
 
     @classmethod
     def tearDownClass(cls):
-        super(SeleniumLiveTestCase, cls).tearDownClass()
         cls.driver.quit()
+        super(SeleniumLiveTestCase, cls).tearDownClass()
