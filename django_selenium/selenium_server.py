@@ -35,7 +35,7 @@ class TestServerThread(threading.Thread):
 
     def run(self):
         try:
-            handler = StaticFilesHandler(basehttp.AdminMediaHandler(WSGIHandler()))
+            handler = StaticFilesHandler(WSGIHandler())
             def test_app(environ, start_response):
                 if environ['REQUEST_METHOD'] == 'HEAD':
                     start_response('200 OK', [])
