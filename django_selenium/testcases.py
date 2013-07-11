@@ -92,7 +92,7 @@ class MyDriver(object):
         self.open_url(reverse('login'))
         self.type_in("#id_username", username)
         self.type_in("#id_password", password)
-        self.click("#login-form input[type='submit']")
+        self.click("#login-form [type='submit']")
 
     def update_text(self):
         """
