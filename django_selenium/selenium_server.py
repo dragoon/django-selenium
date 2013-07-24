@@ -4,6 +4,7 @@ from django.core.handlers.wsgi import WSGIHandler
 from django.contrib.staticfiles.handlers import StaticFilesHandler
 
 import threading
+from django_selenium import settings
 
 class StoppableWSGIServer(basehttp.WSGIServer):
     """WSGIServer with short timeout"""
@@ -30,6 +31,9 @@ class TestServerThread(threading.Thread):
         self.port = port
         self._start_event = threading.Event()
         self._stop_event = threading.Event()
+        self._activate_event = threading.Event()
+        #describes whether server already change behaviour according to activate event
+        self._ready_event = threading.Event()
         self._error = None
         super(TestServerThread, self).__init__()
 
@@ -52,20 +56,44 @@ class TestServerThread(threading.Thread):
             self.error = e
             self._start_event.set()
             return
-
+        self._activate_event.set()
         # Loop until we get a stop event.
         while not self._stop_event.is_set():
-            httpd.handle_request()
+            if self._activate_event.wait(5):
+                httpd.handle_request()
+            self._ready_event.set()
 
     def stop(self, timeout=None):
         """Stop the thread and wait for it to finish."""
         self._stop_event.set()
         self.join(timeout)
 
-def start_test_server(address='localhost', port=8000):
-    server_thread = TestServerThread(address, port)
-    server_thread.start()
-    server_thread._start_event.wait()
-    if server_thread._error:
-        raise server_thread._error
-    return server_thread
+    def activate(self):
+        """Activate server and wait while it changes status. """
+        self._activate_event.set()
+        self._ready_event.clear()
+        if not self._ready_event.wait(settings.SELENIUM_TEST_SERVER_TIMEOUT):
+            raise Exception('Test server hang\'s. Waiting timeout of %i secnds reached' % settings.SELENIUM_TEST_SERVER_TIMEOUT)
+
+    def deactivate(self):
+        """Deactivate server and wait while he finish processing request"""
+        self._activate_event.clear()
+        self._ready_event.clear()
+        if not self._ready_event.wait(settings.SELENIUM_TEST_SERVER_TIMEOUT):
+            raise Exception('Test server hang\'s. Waiting timeout of %i secnds reached' % settings.SELENIUM_TEST_SERVER_TIMEOUT)
+
+
+def get_test_server():
+    #test server lazy initializing with singleton
+
+
+    #TODO: make this lazy-initializing thread-safe
+    if '__instance' not in globals():
+        server_thread = TestServerThread(settings.SELENIUM_TESTSERVER_HOST, settings.SELENIUM_TESTSERVER_PORT)
+        server_thread.start()
+        server_thread._start_event.wait()
+        if server_thread._error:
+            raise server_thread._error
+        globals()['__instance'] = server_thread
+
+    return globals()['__instance']

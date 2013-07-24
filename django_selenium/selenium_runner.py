@@ -8,7 +8,7 @@ import unittest
 from django_selenium import settings
 from django.test.simple import reorder_suite
 from django.test.testcases import TestCase
-from django_selenium.selenium_server import start_test_server
+from django_selenium.selenium_server import get_test_server
 
 try:
     from django.test.simple import DjangoTestSuiteRunner
@@ -97,7 +97,7 @@ class SeleniumTestRunner(DjangoTestSuiteRunner):
             # Set display variable
             os.environ['DISPLAY'] = settings.SELENIUM_DISPLAY
             # Start test server
-            self.test_server = start_test_server(address=settings.SELENIUM_TESTSERVER_HOST, port=settings.SELENIUM_TESTSERVER_PORT)
+            self.test_server = get_test_server()
             if self._is_start_selenium_server():
                 # Start selenium server
                 self.selenium_server = subprocess.Popen(('java -jar %s' % settings.SELENIUM_PATH).split())

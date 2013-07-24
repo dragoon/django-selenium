@@ -6,6 +6,8 @@ SELENIUM_TEST_RUNNER = getattr(settings, 'SELENIUM_TEST_RUNNER',
 
 SELENIUM_TIMEOUT = getattr(settings, 'SELENIUM_TIMEOUT', 120)
 SELENIUM_DRIVER_TIMEOUT = getattr(settings, 'SELENIUM_DRIVER_TIMEOUT', 10)
+# Specify max waiting time for server to finish processing request and deactivates
+SELENIUM_TEST_SERVER_TIMEOUT = getattr(settings, 'SELENIUM_TEST_SERVER_TIMEOUT', 300)
 
 #------------------ LOCAL ----------------------------------
 SELENIUM_TESTSERVER_HOST = getattr(settings, 'SELENIUM_TESTSERVER_HOST', 'localhost')
