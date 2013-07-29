@@ -69,18 +69,18 @@ class TestServerThread(threading.Thread):
         self.join(timeout)
 
     def activate(self):
-        """Activate server and wait while it changes status. """
+        """Activate the server and wait until it changes the status."""
         self._activate_event.set()
         self._ready_event.clear()
         if not self._ready_event.wait(settings.SELENIUM_TEST_SERVER_TIMEOUT):
-            raise Exception('Test server hang\'s. Waiting timeout of %i secnds reached' % settings.SELENIUM_TEST_SERVER_TIMEOUT)
+            raise Exception('Test server hung. Timed out after %i seconds' % settings.SELENIUM_TEST_SERVER_TIMEOUT)
 
     def deactivate(self):
-        """Deactivate server and wait while he finish processing request"""
+        """Deactivate the server and wait until it finishes processing requests."""
         self._activate_event.clear()
         self._ready_event.clear()
         if not self._ready_event.wait(settings.SELENIUM_TEST_SERVER_TIMEOUT):
-            raise Exception('Test server hang\'s. Waiting timeout of %i secnds reached' % settings.SELENIUM_TEST_SERVER_TIMEOUT)
+            raise Exception('Test server hung. Timed out after %i seconds' % settings.SELENIUM_TEST_SERVER_TIMEOUT)
 
 
 def get_test_server():
