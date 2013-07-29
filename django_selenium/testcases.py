@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.test import TransactionTestCase
 from django.utils.html import strip_tags
 
-from django_selenium import settings
+from django_selenium import settings, selenium_server
 
 
 def wait(func):
@@ -204,12 +204,15 @@ class SeleniumTestCase(TransactionTestCase):
         return attr
 
     def _fixture_setup(self):
+        test_server = selenium_server.get_test_server()
+        test_server.deactivate()
         transaction.commit_unless_managed()
         transaction.enter_transaction_management()
         transaction.managed(True)
         super(SeleniumTestCase, self)._fixture_setup()
         transaction.commit()
         transaction.leave_transaction_management()
+        test_server.activate()
 
     def setUp(self):
         import socket
