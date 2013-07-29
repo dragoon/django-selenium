@@ -84,10 +84,9 @@ class TestServerThread(threading.Thread):
 
 
 def get_test_server():
-    #test server lazy initializing with singleton
+    """ TestServer lazy initialization with singleton"""
 
-
-    #TODO: make this lazy-initializing thread-safe
+    #TODO: make this lazy initialization thread-safe
     if '__instance' not in globals():
         server_thread = TestServerThread(settings.SELENIUM_TESTSERVER_HOST, settings.SELENIUM_TESTSERVER_PORT)
         server_thread.start()
