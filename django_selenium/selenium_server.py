@@ -32,7 +32,6 @@ class TestServerThread(threading.Thread):
         self._start_event = threading.Event()
         self._stop_event = threading.Event()
         self._activate_event = threading.Event()
-        #describes whether server already change behaviour according to activate event
         self._ready_event = threading.Event()
         self._error = None
         super(TestServerThread, self).__init__()
