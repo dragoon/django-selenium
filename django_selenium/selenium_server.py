@@ -6,6 +6,13 @@ from django.contrib.staticfiles.handlers import StaticFilesHandler
 import threading
 from django_selenium import settings
 
+try:
+    from django.core.servers.basehttp import WSGIServerException \
+                                             as wsgi_exec_error
+except ImportError:
+    import socket
+    wsgi_exec_error = socket.error                                            
+
 class StoppableWSGIServer(basehttp.WSGIServer):
     """WSGIServer with short timeout"""
 
@@ -51,7 +58,7 @@ class TestServerThread(threading.Thread):
             httpd = StoppableWSGIServer(server_address, basehttp.WSGIRequestHandler)
             httpd.set_app(test_app)
             self._start_event.set()
-        except basehttp.WSGIServerException, e:
+        except wsgi_exec_error, e:
             self.error = e
             self._start_event.set()
             return
