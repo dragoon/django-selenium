@@ -6,9 +6,13 @@ import signal
 import unittest
 
 from django_selenium import settings
-from django.test.simple import reorder_suite
 from django.test.testcases import TestCase
 from django_selenium.selenium_server import get_test_server
+
+try:
+    from django.test.simple import reorder_suite
+except ImportError:
+    from django.test.runner import reorder_suite
 
 try:
     from django.test.simple import DjangoTestSuiteRunner
