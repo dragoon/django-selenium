@@ -58,7 +58,7 @@ class TestServerThread(threading.Thread):
             httpd = StoppableWSGIServer(server_address, basehttp.WSGIRequestHandler)
             httpd.set_app(test_app)
             self._start_event.set()
-        except wsgi_exec_error, e:
+        except wsgi_exec_error as e:
             self.error = e
             self._start_event.set()
             return
