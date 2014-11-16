@@ -18,6 +18,7 @@ SELENIUM_PORT = getattr(settings, 'SELENIUM_PORT', 4444)
 SELENIUM_DISPLAY = getattr(settings, 'SELENIUM_DISPLAY', ':0')
 # Set the drivers that you want to run your tests against
 SELENIUM_DRIVER = getattr(settings, 'SELENIUM_DRIVER', 'Firefox')
+SELENIUM_DRIVER_OPTS = getattr(settings, 'SELENIUM_DRIVER_OPTS', dict())
 #------------------------------------------------------------
 
 #----------------- REMOTE ------------------------------------
