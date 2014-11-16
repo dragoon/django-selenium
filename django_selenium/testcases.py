@@ -58,15 +58,16 @@ class MyDriver(object):
     def __init__(self):
         driver = getattr(webdriver, settings.SELENIUM_DRIVER, None)
         assert driver, "settings.SELENIUM_DRIVER contains non-existing driver"
+        driver_opts = getattr(settings, "SELENIUM_DRIVER_OPTS", dict())
         if driver is webdriver.Remote:
             if isinstance(settings.SELENIUM_CAPABILITY, dict):
                 capability = settings.SELENIUM_CAPABILITY
             else:
                 capability = getattr(webdriver.DesiredCapabilities, settings.SELENIUM_CAPABILITY, None)
                 assert capability, 'settings.SELENIUM_CAPABILITY contains non-existing capability'
-            self.driver = driver('http://%s:%d/wd/hub' % (settings.SELENIUM_HOST, settings.SELENIUM_PORT), capability)
+            self.driver = driver('http://%s:%d/wd/hub' % (settings.SELENIUM_HOST, settings.SELENIUM_PORT), capability, **driver_opts)
         else:
-            self.driver = driver()
+            self.driver = driver(**driver_opts)
         self.live_server_url = 'http://%s:%s' % (settings.SELENIUM_TESTSERVER_HOST , str(settings.SELENIUM_TESTSERVER_PORT))
         self.text = ''
 

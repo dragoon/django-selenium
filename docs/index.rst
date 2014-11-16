@@ -51,6 +51,12 @@ So, if you plan to use **selenium locally**, then you should define the followin
 
 - Set ``SELENIUM_DRIVER`` for corresponding browser driver in selenium.
 
+- Optionally, set ``SELENIUM_DRIVER_OPTS`` as a dictionary with options to be passed to the selenium
+  webdriver. This option can be used for instance to pass a custom firefox profile path to be used,
+  or a custom path for ``chromedriver``. See the `Selenium webdriver's drivers`_ page for more information.
+
+.. _`Selenium webdriver's drivers`: http://docs.seleniumhq.org/docs/03_webdriver.jsp#selenium-webdriver-s-drivers
+
 
 Remote
 ------
