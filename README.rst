@@ -5,6 +5,10 @@
 Django Selenium Integration Library
 =====================================
 
+This library is not needed for Django > 1.6, please use built-in functionality
+==============================================================================
+
+
 What is it?
 ===========
 | **Django-selenium** is a library that provides seamless integration for Django_ framework
