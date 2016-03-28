@@ -5,7 +5,7 @@
 Django Selenium Integration Library
 =====================================
 
-This library is not needed for Django > 1.6, please use built-in functionality
+This library is not needed for Django > 1.5, please use built-in functionality
 ==============================================================================
 
 
