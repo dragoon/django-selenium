@@ -120,7 +120,7 @@ class MyDriver(object):
         """
         :param selector: CSS selector of the element to be clicked on.
         :param newselector: CSS selector of the new element to wait for.
-        Calls click function and then waits for element presense on the updated page.
+        Calls click function and then waits for element presence on the updated page.
         """
         self.click(selector)
         return self.wait_element_present(newselector)
